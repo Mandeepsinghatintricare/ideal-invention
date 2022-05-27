@@ -36,7 +36,7 @@ class AuthController extends Controller
         try {
             $request->session()->put('user',$data['email']);
         } catch (\Throwable $th) {
-            echo "ERROR";
+            // echo "ERROR";
         }
 
         if(auth()->attempt($data)){

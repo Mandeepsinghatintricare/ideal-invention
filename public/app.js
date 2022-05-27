@@ -3,10 +3,10 @@ let token = {};
 // Main Output and its function
 
 function viewRegister(){
-    $.ajax({
-        url:"/register",
-        method:"GET",
-        success:function(data) {
+  $.ajax({
+    url:"/register",
+    method:"GET",
+    success:function(data) {
             $('#mainOutput').html(data);
         }
     });
@@ -43,55 +43,76 @@ function mainRegister(){
       $.ajax(settings).done(function (response) {
         viewLogin()
       });
-}
-
+    }
+    
 function mainLogin(){
-    let email = document.getElementById("inline-email").value;
-    let password = document.getElementById("inline-password").value;
-    var settings = {
-        "url": "/api/login",
-        "method": "POST",
-        "timeout": 0,
-        "headers": {
-          "Content-Type": "application/json",
-        },
-        "data": JSON.stringify({
-          "email": email,
-          "password": password
-        }),
-      };
-      
-      $.ajax(settings).done(function (response) {
-        token = response;
-
-        var getUser = {
-            "url": "/api/get-user",
-            "method": "GET",
-            "timeout": 0,
-            "headers": {
-              "Authorization": "Bearer "+token.token,
-            },
-          };
-          
-          $.ajax(getUser).done(function (response) {
-            document.getElementById('mainOutput').innerHTML = (response);
-          });
-
-      });
-      
+let email = document.getElementById("inline-email").value;
+let password = document.getElementById("inline-password").value;
+var settings = {
+    "url": "/api/login",
+    "method": "POST",
+    "timeout": 0,
+    "headers": {
+      "Content-Type": "application/json",
+    },
+    "data": JSON.stringify({
+      "email": email,
+      "password": password
+    }),
+  };
+  
+  $.ajax(settings).done(function (response) {
+    token = response;
+    sessionStorage.setItem('token', token.token);
+    
+    var getUser = {
+      "url": "/api/get-user",
+      "method": "GET",
+      "timeout": 0,
+      "headers": {
+        "Authorization": "Bearer "+token.token,
+      },
+    };
+    
+    $.ajax(getUser).done(function (response) {
+      document.getElementById('mainOutput').innerHTML = (response);
+    });
+    
+  });
+  
+}
+  
+if (sessionStorage.getItem('token')) {
+  console.log("true");
+  var getUser = {
+    "url": "/api/get-user",
+    "method": "GET",
+    "timeout": 0,
+    "headers": {
+      "Authorization": "Bearer "+sessionStorage.getItem('token'),
+    },
+  };
+  
+  $.ajax(getUser).done(function (response) {
+    document.getElementById('mainOutput').innerHTML = (response);
+  });
+}
+else{
+  console.log("false");
 }
 
 function logout(){
-    var settings = {
+      var settings = {
         "url": "/api/logout",
         "method": "POST",
         "timeout": 0,
         "headers": {
-          "Authorization": "Bearer "+token.token
+          "Authorization": "Bearer "+sessionStorage.getItem('token'),
         },
       };
       
       $.ajax(settings).done(function (response) {
+        sessionStorage.removeItem('token');
         window.location.href = "/";
       });
 }
@@ -105,7 +126,7 @@ function searchUser(str){
             "method": "GET",
             "timeout": 0,
             "headers": {
-              "Authorization": "Bearer "+token.token
+              "Authorization": "Bearer "+sessionStorage.getItem('token')
             },
           };
           
@@ -120,7 +141,7 @@ function searchUser(str){
             "method": "GET",
             "timeout": 0,
             "headers": {
-              "Authorization": "Bearer "+token.token
+              "Authorization": "Bearer "+sessionStorage.getItem('token')
             },
           };
           
@@ -138,7 +159,7 @@ function deleteUser(id){
             "method": "GET",
             "timeout": 0,
             "headers": {
-              "Authorization": "Bearer "+token.token
+              "Authorization": "Bearer "+sessionStorage.getItem('token')
             },
           };
           
@@ -160,7 +181,7 @@ function newUserData(){
                 processData: false,  // do not process the data as url encoded params
                 cache: false,
                 headers:{
-                    "Authorization": "Bearer "+token.token
+                    "Authorization": "Bearer "+sessionStorage.getItem('token')
                   },
 			    contentType: false,
                 data: formData,
@@ -198,7 +219,7 @@ function editData(id){
         type: "GET",
         url: "api/edit/"+userId,
         headers:{
-            "Authorization": "Bearer "+token.token
+            "Authorization": "Bearer "+sessionStorage.getItem('token')
           },
         success: function(data) {
             // console.log(data);
@@ -229,8 +250,8 @@ function editData(id){
             	document.getElementById("swimmingNew").checked = true;
             }
             document.getElementById('inputAddressNew').value = (result['address']);
-
-			document.getElementById('editImage').src= "image/"+(result['image']);
+			      document.getElementById('editImage').src= "image/"+(result['image']);
+            document.getElementById('created_By').value = (result['created_By']);
         },
         error: function(data) {
               
@@ -260,7 +281,7 @@ function editUserData(){
             processData: false,  // do not process the data as url encoded params
             cache: false,
             headers:{
-                "Authorization": "Bearer "+token.token
+                "Authorization": "Bearer "+sessionStorage.getItem('token')
               },
 		    contentType: false,
             data: formData,

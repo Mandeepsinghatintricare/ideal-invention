@@ -11,7 +11,7 @@ class FormController extends Controller
 {
     public function view($users)
     {
-        $output='<table class="table table-bordered">
+        $output='<table class="table table-bordered table-responsive">
                 <thead>
                     <tr>
                         <th scope="col">Id</th>
@@ -23,6 +23,7 @@ class FormController extends Controller
                         <th scope="col">Address</th>
                         <th scope="col">Images</th>
                         <th scope="col">Created By</th>
+                        <th scope="col">Edited By</th>
                         <th scope="col">Actions</th>
                         <th scope="col">Created At</th>
                         <th scope="col">Updated At</th>
@@ -41,6 +42,7 @@ class FormController extends Controller
                         <td>'. $user->address .'</td>
                         <td><img src="Image/'. $user->image .'" alt="#"></td>
                         <td>'. $user->created_By .'</td>
+                        <td>'. $user->edited_By .'</td>
                         <td>
                             <button onclick="editData('. $user->id .')" type="button" class="btn btn-primary">
                               Edit
@@ -104,6 +106,7 @@ class FormController extends Controller
             'address' => 'required',
             'image' => '',
             'created_By'=> 'required',
+            'edited_By'=> 'required',
         ]);
         
         $attributes['hobby'] = $hobby;
@@ -134,6 +137,7 @@ class FormController extends Controller
             'address' => 'required',
             'image' => '',
             'created_By'=> 'required',
+            'edited_By'=> 'required',
             ]);
         
         if (request()->hobby && is_array(request()->hobby)) {

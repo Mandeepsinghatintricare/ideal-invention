@@ -66,7 +66,10 @@
 		            <img id="editImage" src="" alt="your image">
 	            </div>
 				<div>
-					<input type="text" hidden name="created_By" value="{{ auth()->user()->email }}">
+					<input type="text" hidden id="created_By" name="created_By">
+				</div>
+				<div>
+					<input type="text" hidden name="edited_By" value="{{ auth()->user()->email }}">
 				</div>
 	        </form>
 	      </div>

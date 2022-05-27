@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('address');
             $table->text('image');
             $table->string('created_By');
+            $table->string('edited_By')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

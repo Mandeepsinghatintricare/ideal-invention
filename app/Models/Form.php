@@ -26,6 +26,7 @@ class Form extends Authenticatable
         'address',
         'image',
         'created_By',
+        'edited_By',
     ];
 
     /**

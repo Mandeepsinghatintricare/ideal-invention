@@ -19,7 +19,7 @@
             </div>
             <hr>
             <div id="output" class="">
-                <table class="table table-bordered">
+                <table class="table table-bordered table-responsive">
                     <thead>
                         <tr>
                             <th scope="col">Id</th>
@@ -31,6 +31,7 @@
                             <th scope="col">Address</th>
                             <th scope="col">Images</th>
                             <th scope="col">Created By</th>
+                            <th scope="col">Edited By</th>
                             <th scope="col">Actions</th>
                             <th scope="col">Created At</th>
                             <th scope="col">Updated At</th>
@@ -48,6 +49,7 @@
                             <td>{{ $user->address }}</td>
                             <td><img src="Image/{{ $user->image }}" alt="#"></td>
                             <td>{{ $user->created_By }}</td>
+                            <td>{{ $user->edited_By }}</td>
                             <td>
                                 <button onclick="editData({{ $user->id }})" type="button" class="btn btn-primary">
                                   Edit

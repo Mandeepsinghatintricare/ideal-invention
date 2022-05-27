@@ -62,6 +62,9 @@
 				<div>
 					<input type="text" hidden name="created_By" value="{{ auth()->user()->email }}">
 				</div>
+				<div>
+					<input type="text" hidden name="edited_By" value="{{ auth()->user()->email }}">
+				</div>
 	        </form>
 	      </div>
 	      <div class="modal-footer">
